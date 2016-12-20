@@ -1,0 +1,2 @@
+(1)a.outが作られた
+(2)Hello world! I'm sample 2.
