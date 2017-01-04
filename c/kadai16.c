@@ -1,41 +1,47 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-typedef struct _station{
+typedef struct station{
   char name[30];
   char arrivalTime[10];
   char departureTime[10];
   struct station* next;
 } station;
 
-int main(){
-  staion *p, *s;
-  int i = 0;
+//リストに追加する
+station *add_stasion(char *name, char *arrivalTime, char *departureTime, station *head){
+  station *p;
+  
+  p = (station*)malloc(sizeof(station));
+  
+  strcpy(p->name,name);
+  strcpy(p->arrivalTime,arrivalTime);
+  strcpy(p->departureTime,departureTime);
 
-  for( i = 0; i < 3; i++ ){
-    if(i == 0){
-      p = (station*)malloc(sizeof(station*));
-      s = p;
-    }else{
-      p->next = (station*)malloc(sizeof(station*));
-      p = p->next;
-    }
-  }
-  p->next = NULL;
-  strcpy(p[0].name,"Tsukuba");
-  strcpy(p[0].arrivalTime,"10:00");
-  strcpy(p[0].departureTime,"10:05");
-  strcpy(p[1].name,"Nagareyama");
-  strcpy(p[1].arrivalTime,"10:30");
-  strcpy(p[1].departureTime,"10:35");
-  strcpy(p[2].name,"Akihabara");
-  strcpy(p[2].arrivalTime,"11:00");
-  strcpy(p[2].departureTime,"11:05");
+  p->next = head; //先頭ポインタを次のポインタに
+  head = p;  //今のポインタを先頭ポインタに
+  
+  return head;
+}
 
+//リストの表示
+void show_list(station *p)
+{
   while (p != NULL) {
     printf("%s %s %s\n", p->name, p->arrivalTime, p->departureTime);
-    p = p -> next;
+    p = p->next;
   }
-  
+}
+
+int main(){
+  station *head;
+
+  head = NULL;
+  head = add_stasion("Tsukuba", "10:00", "10:05", head);
+  head = add_stasion("Nagareyama", "10:30", "10:35", head);
+  head = add_stasion("Akihabara", "11:00", "11:05", head);
+
+  show_list(head);
+
   return 0;
 }
